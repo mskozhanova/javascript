@@ -1,0 +1,12 @@
+* {
+  box-sizing: border-box;
+}
+.main-content{
+	width:900px;
+	height: 650px;
+	position: relative;
+}
+.main-content.test{
+	background: url(diagram.jpg) no-repeat;
+	background-position: 0px -200px;
+}
