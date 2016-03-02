@@ -10,3 +10,27 @@
 	background: url(diagram.jpg) no-repeat;
 	background-position: 0px -200px;
 }
+.zero{
+	position: absolute;
+	background: green;
+}
+.axis{
+	height:0px;
+	border-bottom:1px solid #ccc;
+	position: absolute;
+}
+.axis-scale-points{
+	background: white;
+	color: blue;
+	font-size: 10px;
+	position: absolute;
+}
+.area-name{
+	position: absolute;
+	border: 1px solid #ccc;
+	padding:5px;
+	color: #999;
+	font-size: 12px;
+	width:auto;
+	
+}
