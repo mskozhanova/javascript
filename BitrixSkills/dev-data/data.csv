@@ -1,0 +1,10 @@
+id;name;company;date;areacode;score
+123456;Vanya Petroff;Microsite;2016-02-29;agents;4
+123456;Vanya Petroff;Microsite;2016-02-29;tech;2
+123456;Vanya Petroff;Microsite;2016-02-29;cache;5
+123456;Vanya Petroff;Microsite;2016-02-29;design;8
+123456;Vanya Petroff;Microsite;2016-02-29;complex;7
+123456;Vanya Petroff;Microsite;2016-02-29;simple;8
+123456;Vanya Petroff;Microsite;2016-02-29;handlers;9
+123456;Vanya Petroff;Microsite;2016-02-29;adm;4
+

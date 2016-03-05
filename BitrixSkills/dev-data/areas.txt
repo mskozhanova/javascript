@@ -1,0 +1,1 @@
+{"areas": ["agents", "design", "tech", "adm", "complex", "cache", "simple", "handlers"], "minGrade": 0, "maxGrade": 10}

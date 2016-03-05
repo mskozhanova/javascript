@@ -1,0 +1,2 @@
+{"result": "Test results", "company": "Company", "name": "Name", "date": "Date", "area": "Area", "score": "Score", "areaСaptions": {"agents": "Agents",
+"design": "Design", "tech": "Technologies", "adm": "Administration", "complex": "Complex Components", "cache": "Cache", "simple": "Simple Components", "handlers": "Handlers"}}
