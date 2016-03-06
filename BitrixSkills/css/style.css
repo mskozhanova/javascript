@@ -1,52 +1,12 @@
-* {
-  box-sizing: border-box;
-}
-#caption{
-	float:left;
-}
-#main{
-	float:left;
-}
 
 .main-content{
 	height: 650px;
 	position: relative;
 }
 
-@media (min-width: 966px)  {
-	#caption{
-		width:250px;
-	}
-	#main{
-		width:700px;
-	}	
-}
-
-@media (min-width: 768px) and (max-width: 965px) {
-	#caption{
-		width:100%;
-	}
-	#main{
-		width:700px;
-	}	
-}
-
-@media (max-width: 767px) {
-	#caption{
-		width:100%;
-	}
-	#main{
-		width:100%;
-	}	
-}
-
-.main-content.test{
-	background: url(diagram.jpg) no-repeat;
-	background-position: 0px -200px;
-}
 .zero{
 	position: absolute;
-	background: green;
+	background: #009900;
 }
 .axis{
 	height:0px;
@@ -55,7 +15,7 @@
 }
 .axis-scale-points{
 	background: white;
-	color: blue;
+	color: #000099;
 	font-size: 10px;
 	position: absolute;
 	z-index: +10;
@@ -65,7 +25,7 @@
 	border: 1px solid #ccc;
 	padding:5px;
 	color: #999;
-	font-size: 12px;
+	
 	width:auto;	
 }
 .exam-point{
@@ -82,14 +42,8 @@
 .titles h1 {
 	color: #990000;
 }
-.results{
-	width:auto;
-	font-size: 70%;
 
-}
-.results tbody tr:nth-child(2n+1) td{
-	background: #f1f1f1;
-}
 .results thead tr{
-	background: #ccc;
+	background: #999;
+	color: white;
 }

@@ -10,6 +10,7 @@
 	var mainSelector = "#main";
 	var textSelector = "#caption";
 
+
 	// Convinience function for inserting innerHTML for 'select'
 	var insertHtml = function (selector, html) {
 	  var targetElem = document.querySelector(selector);
@@ -88,7 +89,7 @@
 									  	$ajaxUtils.sendGetRequest(
 									  		areasDataUrl,
 									  		function(res){
-
+									  			
 
 
 												for(var i=0;i<res.areas.length;i++){
@@ -110,7 +111,7 @@
 
 													newCaptionDivLeft = (zeroX+(axisLength+captionDeltaX)*Math.cos(-Math.PI*2*i/res.areas.length));
 													newCaptionDivTop = (zeroY+(axisLength+captionDeltaY)*Math.sin(-Math.PI*2*i/res.areas.length));			
-													var newCaptionDiv = makeElement("", "span", "#"+res.areas[i], "area-name", newCaptionDivLeft, newCaptionDivTop, "", "");
+													var newCaptionDiv = makeElement("", "mark", "#"+res.areas[i], "glyphicon glyphicon-pushpin text-capitalize  area-name", newCaptionDivLeft, newCaptionDivTop, "", "");
 
 													newCaptionDiv.textContent  = local.areaСaptions[res.areas[i]];
 
@@ -169,7 +170,18 @@
 													  		resultRowUrl,
 													  		function(row){
 													  			for(var j=0;j<obj.scores.length; j++){
-													  				results += insertProperty(insertProperty(row, "dev-score", obj.scores[j].score), "dev-area", local.areaСaptions[obj.scores[j].area]);
+													  				var cl = "";
+													  				for(pr in res.gradeColor){
+													  					cl = pr;
+													  					if(obj.scores[j].score > res.gradeColor[pr])
+													  						break;
+													  				}
+													  				//console.log(cl);
+													  				results += insertProperty(
+													  						insertProperty(
+													  							insertProperty(row, "dev-score-class", cl), "dev-score", obj.scores[j].score
+													  						), "dev-area", local.areaСaptions[obj.scores[j].area]
+													  					);
 													  			}
 													  			txt = insertProperty(txt, "result-rows", results);
 

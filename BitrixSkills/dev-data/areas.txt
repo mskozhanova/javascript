@@ -1,1 +1,1 @@
-{"areas": ["agents", "design", "tech", "adm", "complex", "cache", "simple", "handlers"], "minGrade": 0, "maxGrade": 10}
+{"areas": ["agents", "design", "tech", "adm", "complex", "cache", "simple", "handlers"], "minGrade": 0, "maxGrade": 10, "gradeColor": {"success": 9, "warning": 5, "danger": 0} }

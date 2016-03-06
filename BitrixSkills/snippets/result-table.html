@@ -1,7 +1,12 @@
 <div class="titles">
-	<h1>{{caption-result}}</h1><p>{{caption-company}}: {{dev-company}}</p><p>{{caption-name}}: {{dev-name}}</p><p>{{caption-date}}: {{dev-date}}</p>
+	<h1>{{caption-result}}</h1>
+	<table class="table  table-hover">
+		<tr><td>{{caption-company}}:</td><td>{{dev-company}}</td></tr>
+		<tr><td>{{caption-name}}:</td><td>{{dev-name}}</td></tr>
+		<tr><td>{{caption-date}}:</td><td>{{dev-date}}</td></tr>
+	</table>
 </div>
-<table class="results">
+<table class="table table-striped table-condensed results">
 	<thead><tr><td>{{caption-area}}</td><td>{{caption-score}}</td></tr></thead>
 	{{result-rows}}
 </table>
