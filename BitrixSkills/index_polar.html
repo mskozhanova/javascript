@@ -5,14 +5,18 @@
 	    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     	<link rel="stylesheet" href="css/style.css">
     	<title></title>
+		<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+		<script src="https://www.amcharts.com/lib/3/radar.js"></script>
+		<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>    	
 	</head>
 	<body>
 		<div class="container">
 			<div class="row">
 				<div id="caption" class="col-lg-3 col-md-3 "></div>
-				<div id="main" class="main-content col-lg-9 col-md-9 "></div>			
+				<div id="main" class="main-content col-lg-9 col-md-9 "><div id="chartdiv"></div></div>			
 			</div>			
 		</div>
+		
   		<script src="js/ajax-utils.js"></script>		
     	<script src="js/script.js"></script>
     	<script type="text/javascript">
@@ -21,7 +25,7 @@
 			    			document.addEventListener("DOMContentLoaded", function (event) {
 							  	var lang = "ru";
 								showLoading(textSelector);
-								getDevData(123456, lang, "rawJS");
+								getDevData(123456, lang, "polar");
 							});	
 
 

@@ -1,6 +1,5 @@
-(function (global) {
 
-	var dc = {};
+	
 
 	var resultUrl = "snippets/result-table.html";
 	var resultRowUrl = "snippets/result-row.html";
@@ -35,7 +34,7 @@
 
 	var axisLength = 200;
 	var zeroPointDim = 10;
-	var captionDeltaX = 80;
+	var captionDeltaX = 50;
 	var captionDeltaY = 50;
 	var markPointDim = 20;
 
@@ -47,27 +46,52 @@
 		var point = document.createElement(elType);
 		point.id = id;
 		point.className=pointClass;
-		point.style.left = pointLeft+"px";
-		point.style.top = pointTop+"px";
-		point.style.width = pointWidth+"px";
-		point.style.height = pointHeight+"px";
+		point.style.left = pxOrPercent(pointLeft);
+		point.style.top = pxOrPercent(pointTop);
+		point.style.width = pxOrPercent(pointWidth);
+		point.style.height = pxOrPercent(pointHeight);
 		document.querySelector(appendToSelector).appendChild(point);
 
 		return point;
 
 	}
 
+	var pxOrPercent = function(str){
+		if(parseInt(str)==str)
+			return str+"px";
+		else
+			return str;
+
+	}
+
+	var rePosition = function(el, angle, sz){
+		console.log("w: "+el.offsetWidth+"; angle: "+angle);
+		if(sz>0){
+			var divi=angle/sz;
+			if(divi==0.25 || divi==0.75 ){
+				el.style.left = el.offsetLeft-el.offsetWidth/2;
+			}
+			if(divi>0.25 && divi<0.75 ){
+				el.style.left = el.offsetLeft-el.offsetWidth;
+			}					
+
+			//el.style.left = el.offsetLeft-el.offsetWidth*Math.abs(0.5-2*divi);
+		}
+	}
+
 	
 
-	document.addEventListener("DOMContentLoaded", function (event) {
-	  	var lang = "en";
-		showLoading(textSelector);
-		getDevData(123456, lang);
 
 
-	});
 
-	function getDevData(id, lang){
+
+
+
+
+
+	function getDevData(id, lang, showType){
+
+
 
 			  	var langUrl1 = insertProperty(langUrl, "lang", lang); 
 				$ajaxUtils.sendGetRequest(
@@ -89,32 +113,36 @@
 									  	$ajaxUtils.sendGetRequest(
 									  		areasDataUrl,
 									  		function(res){
+
 									  			
+									  			
+									  			if(showType=="rawJS"){
 
+													for(var i=0;i<res.areas.length;i++){
+														var newDivContainer = makeElement(res.areas[i], "div", mainSelector, "", 0, 0, "100%", "100%");
+														newDivLeft = (zeroX-axisLength/2+axisLength*Math.cos(-Math.PI*2*i/res.areas.length)/2);
+														newDivTop = (zeroY+axisLength*Math.sin(-Math.PI*2*i/res.areas.length)/2);	
+														var newDiv = makeElement("", "div", "#"+res.areas[i], "axis", newDivLeft, newDivTop, axisLength, 0);
+														newDiv.style.transform = "rotate("+(-360*i/res.areas.length)+"deg)";
 
-												for(var i=0;i<res.areas.length;i++){
-													var newDivContainer = makeElement(res.areas[i], "div", mainSelector, "", 0, 0, "100%", "100%");
-													newDivLeft = (zeroX-axisLength/2+axisLength*Math.cos(-Math.PI*2*i/res.areas.length)/2);
-													newDivTop = (zeroY+axisLength*Math.sin(-Math.PI*2*i/res.areas.length)/2);	
-													var newDiv = makeElement("", "div", "#"+res.areas[i], "axis", newDivLeft, newDivTop, axisLength, 0);
-													newDiv.style.transform = "rotate("+(-360*i/res.areas.length)+"deg)";
+														for(var j=res.minGrade+2;j<=res.maxGrade;j=j+2){
+															var delta = (axisLength)/(res.maxGrade-res.minGrade);
+															newScalePointDivLeft = (zeroX +j*delta*Math.cos(Math.PI*2*i/res.areas.length)-3);
+															newScalePointDivTop = (zeroY -j*delta*Math.sin(Math.PI*2*i/res.areas.length)-5);	
 
-													for(var j=res.minGrade+2;j<=res.maxGrade;j=j+2){
-														var delta = (axisLength)/(res.maxGrade-res.minGrade);
-														newScalePointDivLeft = (zeroX +j*delta*Math.cos(Math.PI*2*i/res.areas.length)-3);
-														newScalePointDivTop = (zeroY -j*delta*Math.sin(Math.PI*2*i/res.areas.length)-5);	
+															var newScalePointDiv = makeElement("pnt-"+i+"-"+j, "div", "#"+res.areas[i], "axis-scale-points", newScalePointDivLeft, newScalePointDivTop, "", "");
 
-														var newScalePointDiv = makeElement("", "div", "#"+res.areas[i], "axis-scale-points", newScalePointDivLeft, newScalePointDivTop, "", "");
+															newScalePointDiv.textContent  = j;
+														}	
 
-														newScalePointDiv.textContent  = j;
-													}	
+														alpha=-Math.PI*2*i/res.areas.length;
+														newCaptionDivLeft = (zeroX+axisLength*Math.cos(alpha)+captionDeltaX*Math.cos(alpha));
+														newCaptionDivTop = (zeroY+axisLength*Math.sin(alpha)+captionDeltaY*Math.sin(alpha));			
+														var newCaptionDiv = makeElement("", "mark", "#"+res.areas[i], "glyphicon glyphicon-pushpin text-capitalize text-center area-name", newCaptionDivLeft, newCaptionDivTop, "", "");
+														rePosition(newCaptionDiv, i, res.areas.length);
+														newCaptionDiv.textContent  = local.areaСaptions[res.areas[i]];
 
-													newCaptionDivLeft = (zeroX+(axisLength+captionDeltaX)*Math.cos(-Math.PI*2*i/res.areas.length));
-													newCaptionDivTop = (zeroY+(axisLength+captionDeltaY)*Math.sin(-Math.PI*2*i/res.areas.length));			
-													var newCaptionDiv = makeElement("", "mark", "#"+res.areas[i], "glyphicon glyphicon-pushpin text-capitalize  area-name", newCaptionDivLeft, newCaptionDivTop, "", "");
-
-													newCaptionDiv.textContent  = local.areaСaptions[res.areas[i]];
-
+													}
 												}
 
 
@@ -162,7 +190,40 @@
 										  			txt = insertProperty(txt, "dev-date", obj.examDate);
 							  		
 
-										  		
+if(showType=="polar"){
+	var dataProv = [];
+	for(var i=0;i<obj.scores.length;i++){
+		dataProv[i] = {	"direction": local.areaСaptions[obj.scores[i].area], "value": obj.scores[i].score };
+	}
+	var chartObj = {
+	  "type": "radar",
+	  "theme": "light",
+	  "dataProvider": dataProv,
+	  "valueAxes": [ {
+	    "gridType": "circles",
+	    "minimum": res.minGrade, "maximum": res.maxGrade,
+	    "autoGridCount": false,
+	    "axisAlpha": 0.2,
+	    "fillAlpha": 0.05,
+	    "fillColor": "#FFFFFF",
+	    "gridAlpha": 0.08,
+	    "guides": [ ],
+	    "position": "left"
+	  } ],
+	  "startDuration": 1,
+	  "graphs": [ {
+	    "balloonText": "[[category]]: [[value]] / 10",
+	    "bullet": "round",
+	    "fillAlphas": 0.3,
+	    "valueField": "value"
+	  } ],
+	  "categoryField": "direction",
+	  "export": {
+	    "enabled": true
+	  }
+	};
+	var chart = AmCharts.makeChart( "chartdiv", chartObj );	
+}										  		
 
 											  		var results = "";
 											  		if(obj.scores.length>0){
@@ -187,11 +248,10 @@
 
 													  			insertHtml(textSelector, txt);
 
-													  			zeroPoint = makeElement("zeropoint", "div", mainSelector, "zero", zeroX-zeroPointDim/2, zeroY-zeroPointDim/2, zeroPointDim, zeroPointDim);
-													  			zeroPoint.style.borderRadius = (zeroPointDim/2)+"px";
+													  			if(showType=="rawJS"){
 
-												  			
-															  			 
+													  					zeroPoint = makeElement("zeropoint", "div", mainSelector, "zero", zeroX-zeroPointDim/2, zeroY-zeroPointDim/2, zeroPointDim, zeroPointDim);
+													  					zeroPoint.style.borderRadius = (zeroPointDim/2)+"px";
 
 
 										  								for(var i=0;i<obj.scores.length;i++){
@@ -205,6 +265,7 @@
 																					newExamPointDiv.style.borderRadius = (markPointDim/2)+"px";
 
 																		}	
+																}
 
 													  			//console.log(obj);
 													  		},						  		
@@ -228,10 +289,5 @@
 				  	
 				  }, 
 				 true);		 									  			  	
-}	
-
-
-	global.$dc = dc;
-
-})(window);
+}					
 
